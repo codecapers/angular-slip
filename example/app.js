@@ -2,7 +2,7 @@
 //
 // Define the 'app' module.
 //
-angular.module('app', [])
+angular.module('app', [ 'slip' ])
 
 //
 // Application controller.
@@ -41,4 +41,4 @@ ol.addEventListener('slip:reorder', function(e){
     return false;
 }, false);
 
-new Slip(ol);
+
