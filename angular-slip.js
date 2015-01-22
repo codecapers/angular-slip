@@ -8,7 +8,23 @@
 		{
 			eventName: 'beforeReorder',
 			slipEventName: 'slip:beforereorder',
-		}
+		},
+		{
+			eventName: 'beforeSwipe',
+			slipEventName: 'slip:beforeswipe',
+		},
+		{
+			eventName: 'beforeWait',
+			slipEventName: 'slip:beforewait',
+		},
+		{
+			eventName: 'afterSwipe',
+			slipEventName: 'slip:afterswipe',
+		},
+		{
+			eventName: 'reorder',
+			slipEventName: 'slip:reorder',
+		},
 	];
 
 	var module = angular
@@ -68,38 +84,6 @@
 
 					var el = element[0];
 					controller.listElement = el;
-
-					if (attrs.beforeSwipe) {
-						var beforeSwipe = $parse(attrs.beforeSwipe, null, true);
-
-						el.addEventListener('slip:beforeswipe', function(e){
-							beforeSwipe(scope, { $event: e });
-						}, false);
-					}
-
-					if (attrs.beforeWait) {
-						var beforeWait = $parse(attrs.beforeWait, null, true);
-
-						el.addEventListener('slip:beforewait', function(e){
-							beforeWait(scope, { $event: e });						    
-						}, false);
-					}
-
-					if (attrs.afterSwipe) {
-						var afterSwipe = $parse(attrs.afterSwipe, null, true);
-
-						el.addEventListener('slip:afterswipe', function(e){
-							afterSwipe(scope, { $event: e });					    
-						}, false);
-					}
-
-					if (attrs.reorder) {
-						var reorder = $parse(attrs.reorder, null, true);
-
-						el.addEventListener('slip:reorder', function(e){
-							reorder(scope, { $event: e });
-						}, false);
-					}
 
 					new Slip(el);					
 				},
