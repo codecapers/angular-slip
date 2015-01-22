@@ -7,7 +7,7 @@
     overflow-x: hidden;
 }
 
-#slippylist li {
+.slippy-list li {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -15,14 +15,14 @@
 }
 
 /* the rest is junk for the demo page */
-#slippylist li.demo-allow-select {
+.slippy-list li.demo-allow-select {
     padding: 1em;
     line-height: 1.3;
     user-select: text;
     -moz-user-select: text;
     -webkit-user-select: text;
 }
-#slippylist li.demo-allow-select span {
+.slippy-list li.demo-allow-select span {
     cursor: text;
 }
 
@@ -34,13 +34,13 @@ body {
     padding: 5px;
 }
 
-#slippylist {
+.slippy-list {
     clear:left;
     margin: 1em;
     padding: 0 0 1px;
 }
 
-#slippylist li {
+.slippy-list li {
     display:block;
     border: 1px solid black;
     background: white;
@@ -52,14 +52,14 @@ body {
     vertical-align: middle;
 }
 
-#slippylist input {
+.slippy-list input {
     vertical-align: middle;
 }
 
-#slippylist .instant::after {
+.slippy-list .instant::after {
     content: " \2261";
 }
-#slippylist .instant {
+.slippy-list .instant {
     float: right;
 }
 

@@ -13,7 +13,14 @@
         <p>
             Swiping and reordering lists of elements on touch screens, no fuss. A&nbsp;tiny library by <a href="http://twitter.com/pornelski">Kornel</a>.
         </p>
-        <ol id="slippylist" class="slippy-list">
+        <ol 
+            class="slippy-list" 
+            before-reorder="beforeReorder($event)"
+            before-swipe="beforeSwipe($event)"
+            before-wait="beforeWait($event)"
+            after-swipe="afterSwipe($event)"
+            reorder="reorder($event)"
+            >
             <li class="demo-no-reorder">Swipe,</li>
             <li class="demo-no-swipe">hold &amp; reorder <span class="instant">or instantly</span></li>
             <li>or either</li>
