@@ -5,9 +5,7 @@
 	// Event reponse that calls 'preventDefault'.
 	//
 	var responsePreventDefault = function (result, event) {
-		if (!result) {
-			event.preventDefault();
-		}
+		event.preventDefault();
 	}
 
 	//
@@ -17,34 +15,30 @@
 		{
 			eventName: 'beforeReorder',
 			slipEventName: 'slip:beforereorder',
-			response: responsePreventDefault,
+			defaultResponse: responsePreventDefault,
 		},
 		{
 			eventName: 'beforeSwipe',
 			slipEventName: 'slip:beforeswipe',
-			response: responsePreventDefault,
+			defaultResponse: responsePreventDefault,
 		},
 		{
 			eventName: 'beforeWait',
 			slipEventName: 'slip:beforewait',
-			response: responsePreventDefault,
+			defaultResponse: responsePreventDefault,
 		},
 		{
 			eventName: 'afterSwipe',
 			slipEventName: 'slip:afterswipe',
-			response: function (result, event) {
-				if (result) {
-					event.target.parentNode.appendChild(event.target);
-				}
+			defaultResponse: function (result, event) {
+				event.target.parentNode.appendChild(event.target);
 			},
 		},
 		{
 			eventName: 'reorder',
 			slipEventName: 'slip:reorder',
-			response: function (result, event) {
-				if (result) {
-					event.target.parentNode.insertBefore(event.target, event.detail.insertBefore);
-				}
+			defaultResponse: function (result, event) {
+				event.target.parentNode.insertBefore(event.target, event.detail.insertBefore);
 			},
 		},
 	];
@@ -82,8 +76,9 @@
 							// Lazily register the event handler when the user defines it.
 							self.listElement.addEventListener(eventType.slipEventName, function(event){
 								registered.forEach(function (fn) {
-									var result = fn($scope, { $event: event });
-									eventType.response(result, event);
+									if (fn($scope, { $event: event })) {
+										eventType.response(result, event);
+									}
 								});
 
 							}, false);
