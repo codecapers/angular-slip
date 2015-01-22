@@ -1,0 +1,29 @@
+{
+  "name": "angular-slip",
+  "version": "1.0.0",
+  "homepage": "https://github.com/codecapers/angular-slip",
+  "authors": [
+    "Ashley Davis <ashley@codecapers.com.au>"
+  ],
+  "description": "Angular wrapper for slipjs library.",
+  "main": "angular-slip.js",
+  "keywords": [
+    "angular",
+    "slip",
+    "swipe",
+    "drag",
+    "drop",
+    "list",
+    "gesture",
+    "touch",
+    "mobile"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
