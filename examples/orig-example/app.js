@@ -10,29 +10,23 @@ angular.module('app', [ 'slip' ])
 .controller('AppCtrl', function AppCtrl ($scope) {
 
 	$scope.beforeReorder = function (e) {
-	    if (/demo-no-reorder/.test(e.target.className)) {
-	        e.preventDefault();
-	    }
+	    return !/demo-no-reorder/.test(e.target.className);
 	};
 
 	$scope.beforeSwipe = function (e) {
-	    if (e.target.nodeName == 'INPUT' || /demo-no-swipe/.test(e.target.className)) {
-	        e.preventDefault();
-	    }
+	    return !(e.target.nodeName == 'INPUT' || /demo-no-swipe/.test(e.target.className));
 	};
 
 	$scope.beforeWait = function (e) {
-		if (e.target.className.indexOf('instant') > -1) {
-			e.preventDefault();
-		}
+		return !(e.target.className.indexOf('instant') > -1);
 	};
 
 	$scope.afterSwipe = function (e) {
-		e.target.parentNode.appendChild(e.target);
+		return true;
 	};
 
 	$scope.reorder = function (e) {
-	    e.target.parentNode.insertBefore(e.target, e.detail.insertBefore);
+	    return true;
 	};
 })
 ;

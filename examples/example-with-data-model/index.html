@@ -15,26 +15,20 @@
         </p>
         <ol 
             class="slippy-list" 
-            before-reorder="beforeReorder($event)"
-            before-swipe="beforeSwipe($event)"
-            before-wait="beforeWait($event)"
-            after-swipe="afterSwipe($event)"
-            reorder="reorder($event)"
             >
-            <li class="demo-no-reorder">Swipe,</li>
-            <li class="demo-no-swipe">hold &amp; reorder <span class="instant">or instantly</span></li>
-            <li>or either</li>
-            <li class="demo-no-swipe demo-no-reorder">or none of them.</li>
-            <li>Can play nicely with:</li>
-            <li>interaction <input type="range"></li>
-            <li style="transform: scaleX(0.97) skewX(-10deg); -webkit-transform: scaleX(0.97) skewX(-10deg)">inline CSS transforms</li>
-            <li class="skewed">stylesheet transforms</li>
-            <li class="demo-allow-select"><span class="demo-no-reorder">and selectable text, even though animating elements with selected text is a bit weird.</span></li>
-            <li>iOS Safari</li>
-            <li>Mobile Chrome</li>
-            <li>Android Firefox</li>
-            <li>Opera Presto and Blink</li>
-            <li>No dependencies</li>
+
+            <li 
+                ng-repeat="listItem in myList"
+                before-reorder="beforeReorder(listItem, $event)"
+                before-swipe="beforeSwipe(listItem, $event)"
+                before-wait="beforeWait(listItem, $event)"
+                after-swipe="afterSwipe(listItem, $event)"
+                reorder="reorder(listItem, $event)"
+                >
+                <span class="instant"></span>
+                {{listItem.txt}}
+            </li>
+
         </ol>
         
         <h2>Known limitations</h2>

@@ -2,28 +2,50 @@
 (function () {
 
 	//
+	// Event reponse that calls 'preventDefault'.
+	//
+	var responsePreventDefault = function (result, event) {
+		if (!result) {
+			event.preventDefault();
+		}
+	}
+
+	//
 	// Defines the slip events that can be handled.
 	//
 	var eventTypes = [
 		{
 			eventName: 'beforeReorder',
 			slipEventName: 'slip:beforereorder',
+			response: responsePreventDefault,
 		},
 		{
 			eventName: 'beforeSwipe',
 			slipEventName: 'slip:beforeswipe',
+			response: responsePreventDefault,
 		},
 		{
 			eventName: 'beforeWait',
 			slipEventName: 'slip:beforewait',
+			response: responsePreventDefault,
 		},
 		{
 			eventName: 'afterSwipe',
 			slipEventName: 'slip:afterswipe',
+			response: function (result, event) {
+				if (result) {
+					event.target.parentNode.appendChild(event.target);
+				}
+			},
 		},
 		{
 			eventName: 'reorder',
 			slipEventName: 'slip:reorder',
+			response: function (result, event) {
+				if (result) {
+					event.target.parentNode.insertBefore(event.target, event.detail.insertBefore);
+				}
+			},
 		},
 	];
 
@@ -47,20 +69,21 @@
 					//
 					// Functions to register event handlers.
 					//
-					var registerEventHandler = function (handler, eventName, slipEventName) {
+					var registerEventHandler = function (handler, eventType) {
 
-						var registered = registeredEventHandlers[eventName];
+						var registered = registeredEventHandlers[eventType.eventName];
 						if (typeof registered === 'undefined') {
 							registered = []
-							registeredEventHandlers[eventName] = [];
+							registeredEventHandlers[eventType.eventName] = [];
 						}
 
 						if (registered.length === 0) {
 							
 							// Lazily register the event handler when the user defines it.
-							self.listElement.addEventListener(slipEventName, function(e){
+							self.listElement.addEventListener(eventType.slipEventName, function(event){
 								registered.forEach(function (fn) {
-									fn($scope, { $event: e });
+									var result = fn($scope, { $event: event });
+									eventType.response(result, event);
 								});
 
 							}, false);
@@ -69,14 +92,14 @@
 						registered.push(handler);
 					};
 
-					var defineEventType = function (eventName, slipEventName) {
-						self['register' + eventName] = function (handler) {
-							registerEventHandler(handler, eventName, slipEventName);
+					var defineEventType = function (eventType) {
+						self['register' + eventType.eventName] = function (handler) {
+							registerEventHandler(handler, eventType);
 						};
 					};
 
 					eventTypes.forEach(function (eventType) {
-						defineEventType(eventType.eventName, eventType.slipEventName);
+						defineEventType(eventType);
 					});
 				},
 
@@ -90,7 +113,6 @@
 			};
 		}
 	);
-
 
 	//
 	// Directives for event handling.
