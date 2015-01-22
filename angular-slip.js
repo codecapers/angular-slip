@@ -101,7 +101,7 @@
 			function ($parse) {
 				return {
 					restrict: 'A',
-					require: 'slippyList',
+					require: '^slippyList',
 					link: function (scope, element, attrs, controller) {
 
 						if (attrs[eventType.eventName]) {
