@@ -67,6 +67,22 @@
 					var registeredEventHandlers = {};
 
 					//
+					// Determine the index of an element relative to its parent.
+					//
+					var determineElementIndex = function (element) {
+
+						var itemIndex = 0;
+						while (element) {
+							if (element.nodeType === 1) {
+								++itemIndex;
+							}
+							element = element.previousSibling;
+						}
+
+						return itemIndex-1;
+					};
+
+					//
 					// Functions to register event handlers.
 					//
 					self.registerEventHandler = function (handler, eventType, handlerScope) {
@@ -81,9 +97,13 @@
 							
 							// Lazily register the event handler when the user defines it.
 							self.listElement.addEventListener(eventType.slipEventName, function(event){
+
+								var itemIndex = determineElementIndex(event.target);
+
 								registered.forEach(function (fn) {
 									var locals = {
 										$event: event,
+										$index: itemIndex,
 									};
 
 									if (eventType.prepLocals) {
