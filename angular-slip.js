@@ -91,10 +91,13 @@
 										angular.extend(locals, eventType.prepLocals(event));
 									}
 
-									if (fn(handlerScope, locals)) {
-										// A truthy return value from the user's event handler enables the default event response.
-										eventType.defaultResponse(event);
-									}
+									handlerScope.$apply(function () {
+										if (fn(handlerScope, locals)) {
+											// A truthy return value from the user's event handler enables the default event response.
+											eventType.defaultResponse(event);
+										}
+									});
+
 								});
 
 							}, false);
