@@ -69,7 +69,7 @@
 					//
 					// Functions to register event handlers.
 					//
-					var registerEventHandler = function (handler, eventType) {
+					self.registerEventHandler = function (handler, eventType, handlerScope) {
 
 						var registered = registeredEventHandlers[eventType.eventName];
 						if (typeof registered === 'undefined') {
@@ -91,7 +91,7 @@
 										angular.extend(locals, eventType.prepLocals(event));
 									}
 
-									if (fn($scope, locals)) {
+									if (fn(handlerScope, locals)) {
 										// A truthy return value from the user's event handler enables the default event response.
 										eventType.defaultResponse(event);
 									}
@@ -102,16 +102,6 @@
 
 						registered.push(handler);
 					};
-
-					var defineEventType = function (eventType) {
-						self['register' + eventType.eventName] = function (handler) {
-							registerEventHandler(handler, eventType);
-						};
-					};
-
-					eventTypes.forEach(function (eventType) {
-						defineEventType(eventType);
-					});
 				},
 
 				link: function (scope, element, attrs, controller) {
@@ -139,7 +129,7 @@
 
 						if (attrs[eventType.eventName]) {
 							var handler = $parse(attrs[eventType.eventName], null, true);
-							controller['register' + eventType.eventName](handler);
+							controller.registerEventHandler(handler, eventType, scope);
 						}
 					},
 				};
