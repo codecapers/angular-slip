@@ -23,7 +23,7 @@
                 before-swipe="beforeSwipe(listItem, $event)"
                 before-wait="beforeWait(listItem, $event)"
                 after-swipe="afterSwipe(listItem, $event)"
-                reorder="reorder(listItem, $event)"
+                reorder="reorder(listItem, $event, $spliceIndex, $originalIndex)"
                 >
                 <span class="instant"></span>
                 {{listItem.txt}}

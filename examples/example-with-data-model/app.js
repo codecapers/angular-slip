@@ -47,27 +47,34 @@ angular.module('app', [ 'slip' ])
 	];
 
 	$scope.beforeReorder = function (listItem, e) {
+		console.log('beforeReorder');
 		console.log(listItem);
 	    return /demo-no-reorder/.test(e.target.className);
 	};
 
 	$scope.beforeSwipe = function (listItem, e) {
+		console.log('beforeSwipe');
 		console.log(listItem);
 	    return e.target.nodeName == 'INPUT' || /demo-no-swipe/.test(e.target.className);
 	};
 
 	$scope.beforeWait = function (listItem, e) {
+		console.log('afterSwipe');
 		console.log(listItem);
-		return e.target.className.indexOf('instant') > -1);
+		return e.target.className.indexOf('instant') > -1;
 	};
 
 	$scope.afterSwipe = function (listItem, e) {
+		console.log('afterSwipe');
 		console.log(listItem);
 		return true;
 	};
 
-	$scope.reorder = function (listItem, e) {
+	$scope.reorder = function (listItem, e, spliceIndex, originalIndex) {
+		console.log('reorder');
 		console.log(listItem);
+		console.log(spliceIndex);
+		console.log(originalIndex);
 	    return true;
 	};
 })

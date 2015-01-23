@@ -4,7 +4,7 @@
 	//
 	// Event reponse that calls 'preventDefault'.
 	//
-	var responsePreventDefault = function (result, event) {
+	var responsePreventDefault = function (event) {
 		event.preventDefault();
 	}
 
@@ -30,14 +30,20 @@
 		{
 			eventName: 'afterSwipe',
 			slipEventName: 'slip:afterswipe',
-			defaultResponse: function (result, event) {
+			defaultResponse: function (event) {
 				event.target.parentNode.appendChild(event.target);
 			},
 		},
 		{
 			eventName: 'reorder',
 			slipEventName: 'slip:reorder',
-			defaultResponse: function (result, event) {
+			prepLocals: function (event) {
+				return {
+					$spliceIndex: event.detail.spliceIndex,
+					$originalIndex: event.detail.originalIndex,
+				};
+			},
+			defaultResponse: function (event) {
 				event.target.parentNode.insertBefore(event.target, event.detail.insertBefore);
 			},
 		},
@@ -76,8 +82,18 @@
 							// Lazily register the event handler when the user defines it.
 							self.listElement.addEventListener(eventType.slipEventName, function(event){
 								registered.forEach(function (fn) {
-									if (fn($scope, { $event: event })) {
-										eventType.response(result, event);
+									var locals = {
+										$event: event,
+									};
+
+									if (eventType.prepLocals) {
+										// Each event type can add its own locals to the mix if necessary.
+										angular.extend(locals, eventType.prepLocals(event));
+									}
+
+									if (fn($scope, locals)) {
+										// A truthy return value from the user's event handler enables the default event response.
+										eventType.defaultResponse(event);
 									}
 								});
 
