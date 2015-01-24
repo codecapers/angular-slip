@@ -50,7 +50,7 @@
 	// Directive that identifies the list.
 	//
 	.directive(
-		'slippyList', 
+		'slipList', 
 		[
 			'$parse',
 			function ($parse) {
@@ -152,6 +152,13 @@
 						controller.listElement = el;
 
 						new Slip(el);					
+
+						eventTypes.forEach(function (eventType) {
+							if (attrs[eventType.eventName]) {
+								var handler = $parse(attrs[eventType.eventName], null, true);
+								controller.registerEventHandler(handler, eventType, scope);
+							}
+						});
 					},
 				};
 			}
@@ -162,36 +169,11 @@
 		function () {
 			return {
 				restrict: "A",
-				require: '^slippyList',
+				require: '^slipList',
 				link: function (scope, element, attrs, controller) {
 				},
 			}
 		}
 	);
-
-	//
-	// Directives for event handling.
-	//
-	eventTypes.forEach(function (eventType) {
-		module.directive(
-			eventType.eventName,
-			[
-				'$parse',
-				function ($parse) {
-					return {
-						restrict: 'A',
-						require: 'slippyList',
-						link: function (scope, element, attrs, controller) {
-
-							if (attrs[eventType.eventName]) {
-								var handler = $parse(attrs[eventType.eventName], null, true);
-								controller.registerEventHandler(handler, eventType, scope);
-							}
-						},
-					};
-				}
-			]
-		);		
-	});	
 
 })();

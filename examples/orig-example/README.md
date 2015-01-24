@@ -1,4 +1,0 @@
-Angular-Slip Example
-====================
-
-

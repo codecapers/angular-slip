@@ -7,7 +7,7 @@
     overflow-x: hidden;
 }
 
-.slippy-list li {
+.slip-list li {
     user-select: none;
     -moz-user-select: none;
     -webkit-user-select: none;
@@ -15,14 +15,14 @@
 }
 
 /* the rest is junk for the demo page */
-.slippy-list li.demo-allow-select {
+.slip-list li.demo-allow-select {
     padding: 1em;
     line-height: 1.3;
     user-select: text;
     -moz-user-select: text;
     -webkit-user-select: text;
 }
-.slippy-list li.demo-allow-select span {
+.slip-list li.demo-allow-select span {
     cursor: text;
 }
 
@@ -34,13 +34,13 @@ body {
     padding: 5px;
 }
 
-.slippy-list {
+.slip-list {
     clear:left;
     margin: 1em;
     padding: 0 0 1px;
 }
 
-.slippy-list li {
+.slip-list li {
     display:block;
     border: 1px solid black;
     background: white;
@@ -52,14 +52,14 @@ body {
     vertical-align: middle;
 }
 
-.slippy-list input {
+.slip-list input {
     vertical-align: middle;
 }
 
-.slippy-list .instant::after {
+.slip-list .instant::after {
     content: " \2261";
 }
-.slippy-list .instant {
+.slip-list .instant {
     float: right;
 }
 
