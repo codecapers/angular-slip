@@ -2,37 +2,24 @@
 (function () {
 
 	//
-	// Event reponse that calls 'preventDefault'.
-	//
-	var responsePreventDefault = function (event) {
-		event.preventDefault();
-	}
-
-	//
 	// Defines the slip events that can be handled.
 	//
 	var eventTypes = [
 		{
 			eventName: 'beforeReorder',
-			slipEventName: 'slip:beforereorder',
-			defaultResponse: responsePreventDefault,
+			slipEventName: 'slip:beforereorder'
 		},
 		{
 			eventName: 'beforeSwipe',
-			slipEventName: 'slip:beforeswipe',
-			defaultResponse: responsePreventDefault,
+			slipEventName: 'slip:beforeswipe'
 		},
 		{
 			eventName: 'beforeWait',
 			slipEventName: 'slip:beforewait',
-			defaultResponse: responsePreventDefault,
 		},
 		{
 			eventName: 'afterSwipe',
 			slipEventName: 'slip:afterswipe',
-			defaultResponse: function (event) {
-				event.target.parentNode.appendChild(event.target);
-			},
 		},
 		{
 			eventName: 'reorder',
@@ -67,16 +54,29 @@
 					var registeredEventHandlers = {};
 
 					//
+					// Walk up the DOM to find the list item that owns the particular child.
+					// 
+					var findListItem = function (childElement)  {
+
+						var element = childElement;
+						while (element && element.parentNode != self.listElement && element.hasAttribute && !element.hasAttribute('slip-list-item')) {
+							element = element.parentNode;
+						}
+
+						return element;
+					};
+
+					//
 					// Determine the index of an element relative to its parent.
 					//
-					var determineElementIndex = function (element) {
+					var determineElementIndex = function (listItemElement) {
 
 						var itemIndex = 0;
-						while (element) {
-							if (element.nodeType === 1) {
+						while (listItemElement) {
+							if (listItemElement.nodeType === 1) {
 								++itemIndex;
 							}
-							element = element.previousSibling;
+							listItemElement = listItemElement.previousSibling;
 						}
 
 						return itemIndex-1;
@@ -98,7 +98,11 @@
 							// Lazily register the event handler when the user defines it.
 							self.listElement.addEventListener(eventType.slipEventName, function(event){
 
-								var itemIndex = determineElementIndex(event.target);
+								var itemIndex = -1;
+								var listItemElement = findListItem(event.target);
+								if (listItemElement) {
+									itemIndex = determineElementIndex(listItemElement);
+								}
 
 								registered.forEach(function (fn) {
 									var locals = {
@@ -113,8 +117,10 @@
 
 									handlerScope.$apply(function () {
 										if (fn(handlerScope, locals)) {
-											// A truthy return value from the user's event handler enables the default event response.
-											eventType.defaultResponse(event);
+											if (eventType.defaultResponse) {
+												// A truthy return value from the user's event handler enables the default event response.
+												eventType.defaultResponse(event);
+											}
 										}
 									});
 
@@ -135,6 +141,17 @@
 					new Slip(el);					
 				},
 			};
+		}
+	)
+	.directive(
+		'slipListItem',
+		function () {
+			return {
+				restrict: "A",
+				require: '^slippyList',
+				link: function (scope, element, attrs, controller) {
+				},
+			}
 		}
 	);
 
