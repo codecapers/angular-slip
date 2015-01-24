@@ -63,6 +63,10 @@ body {
     float: right;
 }
 
+.instant {
+    cursor: pointer;
+}
+
 .skewed {
     transform: rotate(2deg) scale(0.99);
     -webkit-transform: rotate(2deg) scale(0.99);

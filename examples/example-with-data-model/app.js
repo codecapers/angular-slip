@@ -46,35 +46,49 @@ angular.module('app', [ 'slip' ])
 		},
 	];
 
-	$scope.beforeReorder = function (listItem, e) {
+	$scope.beforeReorder = function (e, itemIndex) {
 		console.log('beforeReorder');
-		console.log(listItem);
-	    return /demo-no-reorder/.test(e.target.className);
+		console.log(itemIndex);
+	    if ($scope.myList[itemIndex].noReorder) {
+	    	e.preventDefault();
+	    }
 	};
 
-	$scope.beforeSwipe = function (listItem, e) {
+	$scope.beforeSwipe = function (e, itemIndex) {
 		console.log('beforeSwipe');
-		console.log(listItem);
-	    return e.target.nodeName == 'INPUT' || /demo-no-swipe/.test(e.target.className);
+		console.log(itemIndex);
+	    if ($scope.myList[itemIndex].noSwipe) {
+	    	console.log('Swipe prevented!');
+	    	e.preventDefault();
+	    }
 	};
 
-	$scope.beforeWait = function (listItem, e) {
+	$scope.beforeWait = function (e, itemIndex) {
+		console.log('beforeWait');
+		console.log(itemIndex);
+		console.log(e.target.className);
+
+		if (e.target.className.indexOf('instant') > -1) {
+			console.log('Instance reorder allowed!');
+			e.preventDefault();
+		}
+
+	};
+
+	$scope.afterSwipe = function (e, itemIndex) {
 		console.log('afterSwipe');
-		console.log(listItem);
-		return e.target.className.indexOf('instant') > -1;
+		console.log(itemIndex);
+		$scope.myList.splice(itemIndex, 1);
 	};
 
-	$scope.afterSwipe = function (listItem, e) {
-		console.log('afterSwipe');
-		console.log(listItem);
-		return true;
-	};
-
-	$scope.reorder = function (listItem, e, spliceIndex, originalIndex) {
+	$scope.reorder = function (e, spliceIndex, originalIndex) {
 		console.log('reorder');
-		console.log(listItem);
+		console.log(e.detail);
 		console.log(spliceIndex);
 		console.log(originalIndex);
+		var listItem = $scope.myList[originalIndex];
+		$scope.myList.splice(originalIndex, 1);
+		$scope.myList.splice(spliceIndex, 0, listItem);
 	    return true;
 	};
 })
