@@ -56,7 +56,7 @@
 			function ($parse) {
 
 				return {
-					restrict: 'C',
+					restrict: 'AC',
 
 					controller: [
 						"$scope",
@@ -71,7 +71,7 @@
 							var findListItem = function (childElement)  {
 
 								var element = childElement;
-								while (element && element.parentNode != self.listElement && element.hasAttribute && !element.hasAttribute('slip-list-item')) {
+								while (element && element.parentNode != self.listElement) {
 									element = element.parentNode;
 								}
 
@@ -163,17 +163,6 @@
 				};
 			}
 		]
-	)
-	.directive(
-		'slipListItem',
-		function () {
-			return {
-				restrict: "A",
-				require: '^slipList',
-				link: function (scope, element, attrs, controller) {
-				},
-			}
-		}
 	);
 
 })();
