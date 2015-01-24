@@ -13,21 +13,11 @@ angular.module('app', [ 'slip' ])
 	// Setup the data model.
 	//
 	$scope.myList = [
-		{
-			txt: 'iOS Safari',
-		},
-		{
-			txt: 'Mobile Chrome',
-		},
-		{
-			txt: 'Android Firefox',
-		},
-		{
-			txt: 'Opera Presto and Blink',
-		},
-		{
-			txt: 'No dependencies',
-		},
+		'iOS Safari',
+		'Mobile Chrome',
+		'Android Firefox',
+		'Opera Presto and Blink',
+		'No dependencies',
 	];
 
 	$scope.beforeWait = function (e, itemIndex) {

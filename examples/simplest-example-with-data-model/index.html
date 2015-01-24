@@ -20,11 +20,8 @@
             slip-reorder="reorder($event, $spliceIndex, $originalIndex)"
             >
 
-            <li 
-                ng-repeat="listItem in myList"
-                slip-list-item
-                >
-                {{listItem.txt}}
+            <li ng-repeat="listItem in myList">
+                {{listItem}}
                 <span 
                     class="instant" 
                     >
