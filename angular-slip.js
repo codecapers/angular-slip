@@ -6,23 +6,23 @@
 	//
 	var eventTypes = [
 		{
-			eventName: 'beforeReorder',
+			eventName: 'slipBeforeReorder',
 			slipEventName: 'slip:beforereorder'
 		},
 		{
-			eventName: 'beforeSwipe',
+			eventName: 'slipBeforeSwipe',
 			slipEventName: 'slip:beforeswipe'
 		},
 		{
-			eventName: 'beforeWait',
+			eventName: 'slipBeforeWait',
 			slipEventName: 'slip:beforewait',
 		},
 		{
-			eventName: 'afterSwipe',
+			eventName: 'slipAfterSwipe',
 			slipEventName: 'slip:afterswipe',
 		},
 		{
-			eventName: 'reorder',
+			eventName: 'slipReorder',
 			slipEventName: 'slip:reorder',
 			prepLocals: function (event) {
 				return {
