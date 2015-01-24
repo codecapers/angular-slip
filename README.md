@@ -8,7 +8,7 @@ Thanks so much to [Kornel](https://github.com/pornel) for this great library.
 
 Looking at the [live examples](#live-examples) is a great way to get started with this.
 
-# Why use angular-slip?
+## Why use angular-slip?
 
 Why would you want to use angular-slip over the other AngularJS drag and drop lists?
 
@@ -18,7 +18,7 @@ Why would you want to use angular-slip over the other AngularJS drag and drop li
 - Data-model agnostic, you get the events you need to update your own data-model.
  
   
-# Alternatives
+## Alternatives
 
 - [angular-drag-and-drop-lists](http://marceljuenemann.github.io/angular-drag-and-drop-lists/demo/#/nested)
 - [angular-ui-tree](https://github.com/angular-ui-tree/angular-ui-tree) 
