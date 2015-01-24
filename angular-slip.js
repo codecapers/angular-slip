@@ -50,7 +50,7 @@
 	// Directive that identifies the list.
 	//
 	.directive(
-		'slippyList', 
+		'slipList', 
 		[
 			'$parse',
 			function ($parse) {
