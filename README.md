@@ -1,14 +1,14 @@
 # angular-slip
 
-A simple Angular wrapper for the [slipjs](https://github.com/pornel/slip) library.
+A simple [AngularJS](https://angularjs.org/) wrapper for the [slipjs](https://github.com/pornel/slip) library.
 
 This is a wrapper for Slip.js, original library (and documentation) available here: [https://github.com/pornel/slip](https://github.com/pornel/slip).
 
 Thanks so much to [Kornel](https://github.com/pornel) for this great library.
 
-This library has minimal [dependencies](#Dependencies) and requires no specific CSS.
+This library has minimal [dependencies](#dependencies) and requires no specific CSS.
 
-Looking at the [live examples](#LiveExamples) is a great way to get started with this. 
+Looking at the [live examples](#live-examples) is a great way to get started with this. 
 
 ## Install
 
@@ -25,7 +25,7 @@ Include dependencies in your HTML:
     <script src="bower_components/angular/angular.js" type="text/javascript"></script>
     <script src="bower_components/angular-slip/angular-slip.js" type="text/javascript"></script>
 
-When you define your [AngularJS](https://angularjs.org/) app module, make a dependency on *slip*:
+When you define your AngularJS app [module](https://docs.angularjs.org/guide/module), make a dependency on *slip*:
 
 	angular.module('app', [ 'slip' ])
 
