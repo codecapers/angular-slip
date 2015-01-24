@@ -1,6 +1,6 @@
-/* these are special */
 .slip-reordering {
     box-shadow: 0 2px 10px rgba(0,0,0,0.45);
+    opacity: 0.75;
 }
 
 .slip-swiping-container {
