@@ -1,1 +1,62 @@
-Hello world!
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf8">
+        <meta name="viewport" content="width=device-width, user-scalable=no, maximum-scale=1.0">
+        <title>Angular-Slip.js — wrapper for slip for sortable and swipeable views</title>
+
+        <link rel="stylesheet" type="text/css" href="./examples/orig-example/app.css">
+    </head>
+    <body ng-app="app" ng-controller="AppCtrl">
+        <h1>Slip.js</h1>
+        <p>
+            Swiping and reordering lists of elements on touch screens, no fuss. A&nbsp;tiny library by <a href="http://twitter.com/pornelski">Kornel</a>.
+        </p>
+
+        <p>
+            AngularJS wrapper by <a href="https://github.com/codecapers">Code Capers</a>.
+        </p>
+
+        <ol 
+            class="slippy-list" 
+            slip-before-reorder="beforeReorder($event)"
+            slip-before-swipe="beforeSwipe($event)"
+            slip-before-wait="beforeWait($event)"
+            slip-after-swipe="afterSwipe($event)"
+            slip-reorder="reorder($event)"
+            >
+            <li class="demo-no-reorder">Swipe,</li>
+            <li class="demo-no-swipe">hold &amp; reorder <span class="instant">or instantly</span></li>
+            <li>or either</li>
+            <li class="demo-no-swipe demo-no-reorder">or none of them.</li>
+            <li>Can play nicely with:</li>
+            <li>interaction <input type="range"></li>
+            <li style="transform: scaleX(0.97) skewX(-10deg); -webkit-transform: scaleX(0.97) skewX(-10deg)">inline CSS transforms</li>
+            <li class="skewed">stylesheet transforms</li>
+            <li class="demo-allow-select"><span class="demo-no-reorder">and selectable text, even though animating elements with selected text is a bit weird.</span></li>
+            <li>iOS Safari</li>
+            <li>Mobile Chrome</li>
+            <li>Android Firefox</li>
+            <li>Opera Presto and Blink</li>
+            <li>No dependencies</li>
+        </ol>
+        
+        <h2>Known limitations</h2>
+        
+        <ul>
+            <li>Tap &amp; hold is too sensitive in Firefox (W3C TouchEvents specification is ambiguous about sensitivity of touch movements, so strictly speaking that's a spec bug, not a browser bug.)</li>
+            <li>There are few bits in animations that could be smoother or more efficient.</li>
+        </ul>
+        
+        <p><a href="https://github.com/codecapers/angular-slip">Bug/fork/star on GitHub</a>.</p>
+
+        <!-- Library code. -->
+        <script src="./bower_components/slip/slip.js" type="text/javascript"></script>
+        <script src="./bower_components/angular/angular.js" type="text/javascript"></script>
+        <script src="./angular-slip.js" type="text/javascript"></script>
+                
+        <!-- App code. -->
+        <script src="./examples/orig-example/app.js" type="text/javascript"></script>
+    </body>
+</html>
