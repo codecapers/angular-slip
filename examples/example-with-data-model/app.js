@@ -69,7 +69,7 @@ angular.module('app', [ 'slip' ])
 		console.log(e.target.className);
 
 		if (e.target.className.indexOf('instant') > -1) {
-			console.log('Instance reorder allowed!');
+			console.log('Instant reorder allowed!');
 			e.preventDefault();
 		}
 
@@ -90,6 +90,16 @@ angular.module('app', [ 'slip' ])
 		$scope.myList.splice(originalIndex, 1);
 		$scope.myList.splice(spliceIndex, 0, listItem);
 	    return true;
+	};
+
+	$scope.tap = function (e, itemIndex) {
+		console.log('tap');
+		console.log(itemIndex);
+	};
+
+	$scope.cancelSwipe = function (e, itemIndex) {
+		console.log('cancelSwipe');
+		console.log(itemIndex);
 	};
 })
 ;

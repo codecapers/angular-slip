@@ -22,6 +22,14 @@
 			slipEventName: 'slip:afterswipe',
 		},
 		{
+			eventName: 'slipTap',
+			slipEventName: 'slip:tap',
+		},
+		{
+			eventName: 'slipCancelSwipe',
+			slipEventName: 'slip:cancelSwipe',
+		},
+		{
 			eventName: 'slipReorder',
 			slipEventName: 'slip:reorder',
 			prepLocals: function (event) {
