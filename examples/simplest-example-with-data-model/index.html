@@ -15,13 +15,9 @@
         </p>
         <ol 
             class="slippy-list" 
-            slip-before-reorder="beforeReorder($event, $index)"
-            slip-before-swipe="beforeSwipe($event, $index)"
             slip-before-wait="beforeWait($event, $index)"
             slip-after-swipe="afterSwipe($event, $index)"
             slip-reorder="reorder($event, $spliceIndex, $originalIndex)"
-            slip-tap="tap($event, $index)"
-            slip-cancel-swipe="cancelSwipe($event, $index)"
             >
 
             <li 
@@ -31,7 +27,6 @@
                 {{listItem.txt}}
                 <span 
                     class="instant" 
-                    ng-show="!listItem.noReorder"
                     >
                 </span>
             </li>

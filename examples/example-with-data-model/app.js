@@ -27,9 +27,6 @@ angular.module('app', [ 'slip' ])
 			noReorder: true,
 		},
 		{
-			txt: 'Mobile Chrome',
-		},
-		{
 			txt: 'iOS Safari',
 		},
 		{
