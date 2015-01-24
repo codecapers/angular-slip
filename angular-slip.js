@@ -43,105 +43,111 @@
 	//
 	.directive(
 		'slippyList', 
-		function ($parse) {
+		[
+			'$parse',
+			function ($parse) {
 
-			return {
-				restrict: 'C',
+				return {
+					restrict: 'C',
 
-				controller: function ($scope) {
+					controller: [
+						"$scope",
+						function ($scope) {
 
-					var self = this;
-					var registeredEventHandlers = {};
+							var self = this;
+							var registeredEventHandlers = {};
 
-					//
-					// Walk up the DOM to find the list item that owns the particular child.
-					// 
-					var findListItem = function (childElement)  {
+							//
+							// Walk up the DOM to find the list item that owns the particular child.
+							// 
+							var findListItem = function (childElement)  {
 
-						var element = childElement;
-						while (element && element.parentNode != self.listElement && element.hasAttribute && !element.hasAttribute('slip-list-item')) {
-							element = element.parentNode;
-						}
-
-						return element;
-					};
-
-					//
-					// Determine the index of an element relative to its parent.
-					//
-					var determineElementIndex = function (listItemElement) {
-
-						var itemIndex = 0;
-						while (listItemElement) {
-							if (listItemElement.nodeType === 1) {
-								++itemIndex;
-							}
-							listItemElement = listItemElement.previousSibling;
-						}
-
-						return itemIndex-1;
-					};
-
-					//
-					// Functions to register event handlers.
-					//
-					self.registerEventHandler = function (handler, eventType, handlerScope) {
-
-						var registered = registeredEventHandlers[eventType.eventName];
-						if (typeof registered === 'undefined') {
-							registered = []
-							registeredEventHandlers[eventType.eventName] = [];
-						}
-
-						if (registered.length === 0) {
-							
-							// Lazily register the event handler when the user defines it.
-							self.listElement.addEventListener(eventType.slipEventName, function(event){
-
-								var itemIndex = -1;
-								var listItemElement = findListItem(event.target);
-								if (listItemElement) {
-									itemIndex = determineElementIndex(listItemElement);
+								var element = childElement;
+								while (element && element.parentNode != self.listElement && element.hasAttribute && !element.hasAttribute('slip-list-item')) {
+									element = element.parentNode;
 								}
 
-								registered.forEach(function (fn) {
-									var locals = {
-										$event: event,
-										$index: itemIndex,
-									};
+								return element;
+							};
 
-									if (eventType.prepLocals) {
-										// Each event type can add its own locals to the mix if necessary.
-										angular.extend(locals, eventType.prepLocals(event));
+							//
+							// Determine the index of an element relative to its parent.
+							//
+							var determineElementIndex = function (listItemElement) {
+
+								var itemIndex = 0;
+								while (listItemElement) {
+									if (listItemElement.nodeType === 1) {
+										++itemIndex;
 									}
+									listItemElement = listItemElement.previousSibling;
+								}
 
-									handlerScope.$apply(function () {
-										if (fn(handlerScope, locals)) {
-											if (eventType.defaultResponse) {
-												// A truthy return value from the user's event handler enables the default event response.
-												eventType.defaultResponse(event);
-											}
+								return itemIndex-1;
+							};
+
+							//
+							// Functions to register event handlers.
+							//
+							self.registerEventHandler = function (handler, eventType, handlerScope) {
+
+								var registered = registeredEventHandlers[eventType.eventName];
+								if (typeof registered === 'undefined') {
+									registered = []
+									registeredEventHandlers[eventType.eventName] = [];
+								}
+
+								if (registered.length === 0) {
+									
+									// Lazily register the event handler when the user defines it.
+									self.listElement.addEventListener(eventType.slipEventName, function(event){
+
+										var itemIndex = -1;
+										var listItemElement = findListItem(event.target);
+										if (listItemElement) {
+											itemIndex = determineElementIndex(listItemElement);
 										}
-									});
 
-								});
+										registered.forEach(function (fn) {
+											var locals = {
+												$event: event,
+												$index: itemIndex,
+											};
 
-							}, false);
-						}
+											if (eventType.prepLocals) {
+												// Each event type can add its own locals to the mix if necessary.
+												angular.extend(locals, eventType.prepLocals(event));
+											}
 
-						registered.push(handler);
-					};
-				},
+											handlerScope.$apply(function () {
+												if (fn(handlerScope, locals)) {
+													if (eventType.defaultResponse) {
+														// A truthy return value from the user's event handler enables the default event response.
+														eventType.defaultResponse(event);
+													}
+												}
+											});
 
-				link: function (scope, element, attrs, controller) {
+										});
 
-					var el = element[0];
-					controller.listElement = el;
+									}, false);
+								}
 
-					new Slip(el);					
-				},
-			};
-		}
+								registered.push(handler);
+							};
+						},
+					],
+
+					link: function (scope, element, attrs, controller) {
+
+						var el = element[0];
+						controller.listElement = el;
+
+						new Slip(el);					
+					},
+				};
+			}
+		]
 	)
 	.directive(
 		'slipListItem',
@@ -161,19 +167,22 @@
 	eventTypes.forEach(function (eventType) {
 		module.directive(
 			eventType.eventName,
-			function ($parse) {
-				return {
-					restrict: 'A',
-					require: 'slippyList',
-					link: function (scope, element, attrs, controller) {
+			[
+				'$parse',
+				function ($parse) {
+					return {
+						restrict: 'A',
+						require: 'slippyList',
+						link: function (scope, element, attrs, controller) {
 
-						if (attrs[eventType.eventName]) {
-							var handler = $parse(attrs[eventType.eventName], null, true);
-							controller.registerEventHandler(handler, eventType, scope);
-						}
-					},
-				};
-			}
+							if (attrs[eventType.eventName]) {
+								var handler = $parse(attrs[eventType.eventName], null, true);
+								controller.registerEventHandler(handler, eventType, scope);
+							}
+						},
+					};
+				}
+			]
 		);		
 	});	
 
