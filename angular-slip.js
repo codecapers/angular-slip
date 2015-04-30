@@ -27,7 +27,7 @@
 		},
 		{
 			eventName: 'slipCancelSwipe',
-			slipEventName: 'slip:cancelSwipe',
+			slipEventName: 'slip:cancelswipe',
 		},
 		{
 			eventName: 'slipReorder',
